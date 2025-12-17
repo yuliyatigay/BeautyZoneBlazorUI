@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyZoneBlazor", "BeautyZoneBlazor\BeautyZoneBlazor.csproj", "{A396C2CF-4047-4795-9C35-3C3359EDC425}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{200F264D-F638-4A5E-912C-605CB0CF27D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{EAE793C1-8F68-4670-AE25-D80F143F74D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{A396C2CF-4047-4795-9C35-3C3359EDC425}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A396C2CF-4047-4795-9C35-3C3359EDC425}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A396C2CF-4047-4795-9C35-3C3359EDC425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{200F264D-F638-4A5E-912C-605CB0CF27D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{200F264D-F638-4A5E-912C-605CB0CF27D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{200F264D-F638-4A5E-912C-605CB0CF27D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{200F264D-F638-4A5E-912C-605CB0CF27D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE793C1-8F68-4670-AE25-D80F143F74D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE793C1-8F68-4670-AE25-D80F143F74D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE793C1-8F68-4670-AE25-D80F143F74D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE793C1-8F68-4670-AE25-D80F143F74D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
