@@ -1,0 +1,40 @@
+@page "/CreateCustomer"
+@rendermode InteractiveServer
+
+<h3>CreateCustomer</h3>
+
+<EditForm Model="customer" OnValidSubmit="CreateAsync">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="row">
+        <div class="ms-md-4">
+            <label>Имя</label>
+            <InputText class="form-control" @bind-Value="customer.Name" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="ms-md-4">
+            <label>Номер телефона</label>
+            <InputText class="form-control" @bind-Value="customer.PhoneNumber" />
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="ms-md-4">
+            <label>Телеграм</label>
+            <InputText class="form-control" @bind-Value="customer.TelegramId" />
+        </div>
+    </div>
+    
+    <div class="ms-md-4 mt-3">
+        <button type="submit" class="btn btn-primary btn-icon">
+            <i class="bi bi-floppy"></i>
+        </button>
+        <a class="btn btn-info btn-icon" title="Back to list"
+           href="/Customers">
+            <i class="bi bi-arrow-left-square"></i>
+        </a>
+    </div>
+    
+</EditForm>

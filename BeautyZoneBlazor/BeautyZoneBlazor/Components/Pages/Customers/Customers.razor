@@ -1,0 +1,41 @@
+@page "/Customers"
+@using Microsoft.AspNetCore.Components.Authorization
+@rendermode InteractiveServer
+<h1>Клиенты</h1>
+<NavLink href="/CreateCustomer"
+         class="btn btn-primary btn-icon" title="Create">
+    <i class="bi bi-plus-square"></i>
+</NavLink>
+<div class="table-responsive-sm mt-3">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <th scope="col">№</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Номер телефона</th>
+        <th scope="col"></th>
+        </thead>
+        <tbody>
+        @foreach (var customer in customers)
+        {
+            <tr>
+                <td>@Increment()</td>
+                <td>@customer.Name</td>
+                <td>@customer.PhoneNumber</td>
+
+                <td>
+                    <div class="d-flex gap-1">
+                        <NavLink href="@($"/EditCustomer/{customer.Id}")" class="btn btn-primary btn-icon btn-sm">
+                            <i class="bi bi-pencil-square"></i>
+                        </NavLink>
+
+                        <button type="button" class="btn btn-danger btn-icon btn-sm"
+                                @onclick="() => DeleteAsync(customer)">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

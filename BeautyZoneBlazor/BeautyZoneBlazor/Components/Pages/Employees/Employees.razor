@@ -1,0 +1,42 @@
+@page "/Employees"
+@rendermode InteractiveServer
+<h1>Мастера</h1>
+<a href="CreateEmployee"
+   class="btn btn-primary btn-icon" title="Create">
+    <i class="bi bi-plus-square"></i></a>
+<div class="table-responsive-sm mt-3">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <th scope="col">№</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Номер телефона</th>
+        <th scope="col">Процедуры</th>
+        <th scope="col"></th>
+        </thead>
+        <tbody>
+        @foreach (var employee in employees)
+        {
+            <tr>
+                <td>@Increment()</td>
+                <td>@employee.Name</td>
+                <td>@employee.PhoneNumber</td>
+
+                <td>@string.Join(", ", employee.Procedures.Select(p => p.Name))</td>
+
+                <td>
+                    <div class="d-flex gap-1">
+                        <NavLink href="@($"/EditEmployee/{employee.Id}")" class="btn btn-primary btn-icon btn-sm">
+                            <i class="bi bi-pencil-square"></i>
+                        </NavLink>
+
+                        <button type="button" class="btn btn-danger btn-icon btn-sm"
+                                @onclick="() => DeleteAsync(employee)">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

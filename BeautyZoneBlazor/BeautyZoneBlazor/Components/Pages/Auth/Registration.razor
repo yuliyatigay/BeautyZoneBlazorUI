@@ -1,0 +1,40 @@
+@page "/Registration"
+@rendermode InteractiveServer
+<h3>Registration</h3>
+<EditForm Model="user" OnValidSubmit="RegisterAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="col-md-4">
+        <label class="mt-3">User name</label>
+        <InputText class="form-control" @bind-Value="user.UserName" />
+    </div>
+    <div class="col-md-4">
+        <label class="mt-3">Email</label>
+        <InputText class="form-control" @bind-Value="user.Email" />
+    </div>
+    <div class="col-md-4">
+        <label class="mt-3">First name</label>
+        <InputText class="form-control" @bind-Value="user.FirstName" />
+    </div>
+    <div class="col-md-4">
+        <label class="mt-3">Last name</label>
+        <InputText class="form-control" @bind-Value="user.LastName" />
+    </div>
+    <div class="col-md-4">
+        <label>Password</label>
+        <InputText type="password" class="form-control" @bind-Value="user.Password" />
+    </div>
+    <div class="col-auto mt-3">
+        <button type="submit" class="btn btn-primary">Confirm identity</button>
+    </div>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger mt-3">@errorMessage</div>
+}
+else if(!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success mt-3">@successMessage</div>
+}

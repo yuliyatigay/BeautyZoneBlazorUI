@@ -1,0 +1,27 @@
+@page "/CreateProcedure"
+@using System.ComponentModel
+@using Domain.Interfaces
+@rendermode InteractiveServer
+
+<h1>Добавить процедуру</h1>
+
+<EditForm Model="@procedure" onvalidsubmit="@CreateAsync">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="row">
+        <div class="ms-md-4">
+            <label>Name</label>
+            <InputText class="form-control" @bind-Value="procedure.Name"></InputText>
+        </div>
+    </div>
+    
+    <div class="ms-md-4 mt-3">
+        <button type="submit" class="btn btn-primary btn-icon">
+            <i class="bi bi-floppy"></i>
+        </button>
+        <a class="btn btn-info btn-icon" title="Back to list"
+           href="/procedures">
+            <i class="bi bi-arrow-left-square"></i>
+        </a>
+    </div>
+</EditForm>
