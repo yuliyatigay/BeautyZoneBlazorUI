@@ -14,6 +14,7 @@ public class AuthClient : IAuthClient
     {
         _httpClient = httpClient;
         _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        
     }
     public async Task<(bool Success, string Message)> Register(UserRegister user)
     {

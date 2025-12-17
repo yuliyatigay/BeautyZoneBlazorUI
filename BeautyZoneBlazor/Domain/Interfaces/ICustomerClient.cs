@@ -8,5 +8,5 @@ public interface ICustomerClient
     Task<Customer> GetCustomerById(Guid id);
     Task CreateCustomer(Customer customer);
     Task UpdateCustomer(Customer customer);
-    Task DeleteCustomer(Customer customer);
+    Task DeleteCustomer(Guid customerId);
 }

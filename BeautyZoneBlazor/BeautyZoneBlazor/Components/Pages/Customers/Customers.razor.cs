@@ -19,7 +19,7 @@ public partial class Customers
     {
         var ok = await _jsRuntime.InvokeAsync<bool>("confirm", "Удалить клиента?");
         if (!ok) return;
-        await _customerClient.DeleteCustomer(customer);
+        await _customerClient.DeleteCustomer(customer.Id);
         customers.Remove(customer);
         StateHasChanged();
     }

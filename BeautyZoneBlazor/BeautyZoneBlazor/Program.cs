@@ -4,8 +4,10 @@ using BeautyZoneBlazor.Components;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureServices(builder.Configuration);
 // Add services to the container.
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
 
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -21,6 +23,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

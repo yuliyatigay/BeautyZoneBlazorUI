@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Domain.Interfaces;
@@ -8,59 +9,78 @@ namespace DataAccess.Clients;
 
 public class CustomerClient : ICustomerClient
 {
-    private readonly HttpClient _httpClient;
+    private readonly IAuthHttpClient _http;
     private readonly JsonSerializerOptions _options;
 
-    public CustomerClient(HttpClient httpClient)
+    public CustomerClient(IAuthHttpClient http)
     {
-        _httpClient = httpClient;
-        _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-    }
-    public async Task<List<Customer>> GetAllCustomers()
-    {
-        using (var response = await _httpClient.GetAsync("api/Customer/GetAllCustomers", 
-                   HttpCompletionOption.ResponseContentRead))
+        _http = http;
+        _options = new JsonSerializerOptions
         {
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-            var customers = await JsonSerializer.DeserializeAsync<List<Customer>>(stream, _options);
-            return customers;
-        }
+            PropertyNameCaseInsensitive = true
+        };
     }
 
-    public async Task<Customer> GetCustomerById(Guid id)
+    public async Task<List<Customer>> GetAllCustomers()
     {
-        using (var response = await _httpClient.GetAsync($"api/Customer/GetCustomerById/{id}"))
-        {
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-            var customer = await JsonSerializer.DeserializeAsync<Customer>(stream, _options);
-            return customer;
-        }
+        var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            "/api/Customer/GetAllCustomers");
+
+        var response = await _http.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content
+            .ReadFromJsonAsync<List<Customer>>(_options)
+            ?? [];
+    }
+
+    public async Task<Customer?> GetCustomerById(Guid id)
+    {
+        var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            $"/api/Customer/GetCustomerById/{id}");
+
+        var response = await _http.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content
+            .ReadFromJsonAsync<Customer>(_options);
     }
 
     public async Task CreateCustomer(Customer customer)
     {
-        var json = JsonSerializer.Serialize(customer, _options);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("api/Customer/CreateCustomer", content);
+        var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            "/api/Customer/CreateCustomer")
+        {
+            Content = JsonContent.Create(customer, options: _options)
+        };
+
+        var response = await _http.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        await JsonSerializer.DeserializeAsync<Customer>(response.Content.ReadAsStreamAsync().Result, _options);
     }
 
     public async Task UpdateCustomer(Customer customer)
     {
-        var json = JsonSerializer.Serialize(customer, _options);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PutAsync($"api/Customer/UpdateCustomer/{customer.Id}", content);
+        var request = new HttpRequestMessage(
+            HttpMethod.Put,
+            $"/api/Customer/UpdateCustomer/{customer.Id}")
+        {
+            Content = JsonContent.Create(customer, options: _options)
+        };
+
+        var response = await _http.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        await JsonSerializer.DeserializeAsync<Customer>(response.Content.ReadAsStreamAsync().Result, _options);
     }
 
-    public Task DeleteCustomer(Customer customer)
+    public async Task DeleteCustomer(Guid customerId)
     {
-        var json = JsonSerializer.Serialize(customer, _options);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        return _httpClient.DeleteAsync($"api/Customer/DeleteCustomer/{customer.Id}");
+        var request = new HttpRequestMessage(
+            HttpMethod.Delete,
+            $"/api/Customer/DeleteCustomer/{customerId}");
+
+        var response = await _http.SendAsync(request);
+        response.EnsureSuccessStatusCode();
     }
 }

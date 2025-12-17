@@ -7,6 +7,7 @@ namespace BeautyZoneBlazor.Components.Pages.Customers;
 public partial class EditCustomer
 {
     [Inject] private ICustomerClient _customerClient { get; set; } = default!;
+    [Inject] private NavigationManager _navManager { get; set; } = default!;
     [Parameter] public Guid id { get; set; }
     private Customer customer = new();
 
@@ -18,5 +19,6 @@ public partial class EditCustomer
     private async Task EditAsync()
     {
         await _customerClient.UpdateCustomer(customer);
+        _navManager.NavigateTo("/customers");
     }
 }

@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BeautyZoneBlazor</a>
     </div>
@@ -8,28 +9,36 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                    </NavLink>
+                </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Procedures">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Процедуры
-            </NavLink>
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Procedures">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Процедуры
+                    </NavLink>
+                </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Employees">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Мастера
-            </NavLink>
-        </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Employees">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Мастера
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Customers">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Клиенты
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <p style="color: white">You are not authorized</p>
+            </NotAuthorized>
+        </AuthorizeView>
         
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Customers">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Клиенты
-            </NavLink>
-        </div>
     </nav>
 </div>

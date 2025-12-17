@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Domain.Interfaces;
@@ -7,60 +8,57 @@ namespace DataAccess.Clients;
 
 public class ProcedureClient : IProcedureClient
 {
-    private readonly HttpClient _httpClient;
+    private readonly IAuthHttpClient _httpClient;
     private readonly JsonSerializerOptions _options;
 
-    public ProcedureClient(HttpClient httpClient)
+    public ProcedureClient(IAuthHttpClient httpClient)
     {
         _httpClient = httpClient;
         _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     }
     public async Task<List<Procedure>> GetAllProcedures()
     {
-        using (var response = await _httpClient.GetAsync("api/Procedure/GetAllProcedures",
-                   HttpCompletionOption.ResponseContentRead))
-        {
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-            var procedures = await JsonSerializer.DeserializeAsync<List<Procedure>>(stream, _options);
-            return procedures;
-        }
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/Procedure/GetAllProcedures");
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<Procedure>>(_options);
     }
 
     public async Task<Procedure> CreateProcedure(Procedure procedure)
     {
-        var json = JsonSerializer.Serialize(procedure, _options);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("api/Procedure/CreateProcedure", content);
+        var request = new HttpRequestMessage(HttpMethod.Post, "api/Procedure/CreateProcedure")
+        {
+            Content = JsonContent.Create(procedure, options: _options)
+        };
+        var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        return await JsonSerializer.DeserializeAsync<Procedure>( response.Content.ReadAsStreamAsync().Result, _options);
+        return await response.Content.ReadFromJsonAsync<Procedure>(_options);
     }
 
     public async Task<Procedure> GetProcedureById(Guid id)
     {
-        using (var response = await _httpClient.GetAsync($"api/Procedure/GetProcedureById/{id}",
-                   HttpCompletionOption.ResponseContentRead))
-        {
-            response.EnsureSuccessStatusCode();
-            var stream = await response.Content.ReadAsStreamAsync();
-            var procedure = await JsonSerializer.DeserializeAsync<Procedure>(stream, _options);
-            return procedure;
-        }
+        var request = new HttpRequestMessage(HttpMethod.Get, $"api/Procedure/GetProcedureById/{id}");
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<Procedure>(_options);
     }
     
 
     public async Task<Procedure> UpdateProcedure(Procedure procedure)
     {
-        var json = JsonSerializer.Serialize(procedure, _options);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PutAsync($"api/Procedure/UpdateProcedure/{procedure.Id}", content);
+        var request = new HttpRequestMessage(HttpMethod.Put, $"api/Procedure/UpdateProcedure/{procedure.Id}")
+        {
+            Content = JsonContent.Create(procedure, options: _options)
+        };
+        var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        return await JsonSerializer.DeserializeAsync<Procedure>(response.Content.ReadAsStreamAsync().Result, _options);
+        return await response.Content.ReadFromJsonAsync<Procedure>(_options);
     }
 
     public async Task DeleteProcedure(Procedure procedure)
     {
-        var response = await _httpClient.DeleteAsync($"api/Procedure/DeleteProcedure/{procedure.Id}");
+        var request = new HttpRequestMessage(HttpMethod.Delete, $"api/Procedure/DeleteProcedure/{procedure.Id}");
+        var response = await _httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
     }
 }
