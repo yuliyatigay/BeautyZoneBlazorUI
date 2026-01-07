@@ -1,20 +1,20 @@
-@page "/EditEmployee/{id:guid}"
+@page "/EditBeautyTech/{id:guid}"
 @rendermode InteractiveServer
-<h3>EditEmployee</h3>
-<EditForm Model="employee" onvalidsubmit="@EditAsync">
+<h5>Редактировать мастера</h5>
+<EditForm Model="_beautyTech" onvalidsubmit="@EditAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Имя</label>
-            <InputText class="form-control" @bind-Value="employee.Name"></InputText>
+            <InputText class="form-control" @bind-Value="_beautyTech.Name"></InputText>
         </div>
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Номер телефона</label>
-            <InputText class="form-control" @bind-Value="employee.PhoneNumber"></InputText>
+            <InputText class="form-control" @bind-Value="_beautyTech.PhoneNumber"></InputText>
         </div>
     </div>
-    <div class="ms-md-4">
+    <div class="ms-md-auto">
         <label>Процедуры</label>
 
         @foreach (var sel in selectBoxes)
@@ -37,7 +37,7 @@
             </div>
         }
     </div>
-    <div class="ms-md-4 mt-3">
+    <div class="ms-md-4 mt-1">
         <button type="submit" class="btn btn-primary btn-icon">
             <i class="bi bi-floppy"></i>
         </button>

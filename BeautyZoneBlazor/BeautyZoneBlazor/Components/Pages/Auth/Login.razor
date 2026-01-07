@@ -1,21 +1,21 @@
 @page "/Login"
 @rendermode InteractiveServer
-<h3>Login</h3>
-<a href="/Registration">Sign up</a>
+<h5>Войти</h5>
+<a href="/Registration">Регистрация</a>
 <EditForm Model="user" OnValidSubmit="LoginAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="col-md-4">
-        <label class="mt-3">Login</label>
+        <label class="mt-3">Логин</label>
         <InputText class="form-control" @bind-Value="user.Email" />
     </div>
     <div class="col-md-4">
-        <label>Password</label>
+        <label>Пароль</label>
         <InputText type="password" class="form-control" @bind-Value="user.Password" />
     </div>
     <div class="col-auto mt-3">
-        <button type="submit" class="btn btn-primary">Confirm identity</button>
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
     </div>
 </EditForm>
 @if (!string.IsNullOrEmpty(ErrorMessage))

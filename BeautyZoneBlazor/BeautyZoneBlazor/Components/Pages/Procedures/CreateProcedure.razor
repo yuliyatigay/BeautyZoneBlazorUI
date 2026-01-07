@@ -3,19 +3,19 @@
 @using Domain.Interfaces
 @rendermode InteractiveServer
 
-<h1>Добавить процедуру</h1>
+<h5>Добавить процедуру</h5>
 
 <EditForm Model="@procedure" onvalidsubmit="@CreateAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Name</label>
             <InputText class="form-control" @bind-Value="procedure.Name"></InputText>
         </div>
     </div>
     
-    <div class="ms-md-4 mt-3">
+    <div class="ms-md-4 mt-1">
         <button type="submit" class="btn btn-primary btn-icon">
             <i class="bi bi-floppy"></i>
         </button>

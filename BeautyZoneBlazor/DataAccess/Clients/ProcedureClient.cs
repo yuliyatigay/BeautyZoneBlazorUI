@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -20,6 +21,10 @@ public class ProcedureClient : IProcedureClient
     {
         var request = new HttpRequestMessage(HttpMethod.Get, "api/Procedure/GetAllProcedures");
         var response = await _httpClient.SendAsync(request);
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return new List<Procedure>();
+        }
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<Procedure>>(_options);
     }

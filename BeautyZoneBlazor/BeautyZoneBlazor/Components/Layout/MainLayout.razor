@@ -10,12 +10,12 @@
         <div class="top-row px-4">
             <AuthorizeView>
                 <Authorized>
-                    <a>Hello, @context.User.Identity?.Name</a>
-                    <a href="/logout">Logout</a>
+                    <a>Привет, @context.User.Identity?.Name</a>
+                    <a href="/logout">Выйти</a>
                 </Authorized>
                 <NotAuthorized>
-                    <NavLink href="/login">Login</NavLink>
-                    <NavLink href="/registration">Sign up</NavLink>
+                    <NavLink href="/login">Войти</NavLink>
+                    <NavLink href="/registration">Регистрация</NavLink>
                 </NotAuthorized>
             </AuthorizeView>
         </div>

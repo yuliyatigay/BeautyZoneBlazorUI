@@ -16,6 +16,7 @@ public static class ContainerConfig
         services.AddScoped<AuthStateProvider>();
         services.AddScoped<AuthenticationStateProvider>(sp => 
             sp.GetRequiredService<AuthStateProvider>());
+        services.AddScoped<ProtectedLocalStorage>();
         
         services.AddCascadingAuthenticationState();
         services.AddAuthorizationCore();
@@ -33,8 +34,8 @@ public static class ContainerConfig
             sp.GetRequiredService<AuthHttpClient>());
 
         services.AddScoped<ICustomerClient, CustomerClient>();
-        services.AddScoped<IEmployeeClient, EmployeeClient>();
+        services.AddScoped<IBeautyTechClient, BeautyTechClient>();
         services.AddScoped<IProcedureClient, ProcedureClient>();
-        
+        services.AddScoped<IUserClient, UserClient>();
     }
 }

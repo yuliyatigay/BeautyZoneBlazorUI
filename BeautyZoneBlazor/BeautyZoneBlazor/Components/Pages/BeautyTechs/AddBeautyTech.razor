@@ -1,21 +1,21 @@
-@page "/CreateEmployee"
+@page "/AddBeautyTech"
 @using Domain.Models
 @rendermode InteractiveServer
-<h3>CreateEmployee</h3>
-<EditForm Model="employee" onvalidsubmit="@CreateAsync">
+<h5>Добавить мастера</h5>
+<EditForm Model="_beautyTech" onvalidsubmit="@CreateAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Имя</label>
-            <InputText class="form-control" @bind-Value="employee.Name"></InputText>
+            <InputText class="form-control" @bind-Value="_beautyTech.Name"></InputText>
         </div>
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Номер телефона</label>
-            <InputText class="form-control" @bind-Value="employee.PhoneNumber"></InputText>
+            <InputText class="form-control" @bind-Value="_beautyTech.PhoneNumber"></InputText>
         </div>
     </div>
-    <div class="ms-md-4">
+    <div class="ms-md-auto">
         <label>Процедуры</label>
 
         @foreach (var sel in selectBoxes)
@@ -38,12 +38,12 @@
             </div>
         }
     </div>
-    <div class="ms-md-4 mt-3">
+    <div class="ms-md-4 mt-1">
         <button type="submit" class="btn btn-primary btn-icon">
             <i class="bi bi-floppy"></i>
         </button>
         <a class="btn btn-info btn-icon" title="Back to list"
-           href="/employees">
+           href="/beautyTechs">
             <i class="bi bi-arrow-left-square"></i>
         </a>
     </div>

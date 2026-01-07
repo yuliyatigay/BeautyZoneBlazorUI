@@ -1,0 +1,53 @@
+@page "/EditAccount/{id:guid}"
+@using Domain.Enums
+@rendermode InteractiveServer
+<h5>Изменить роль</h5>
+<EditForm Model="user" onvalidsubmit="@EditAsync">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="row">
+        <div class="ms-md-auto">
+            <label>Имя</label>
+            <InputText class="form-control" @bind-Value="user.FirstName"></InputText>
+        </div>
+        <div class="ms-md-auto">
+            <label>Фамилия</label>
+            <InputText class="form-control" @bind-Value="user.LastName"></InputText>
+        </div>
+        <div class="ms-md-auto">
+            <label>Email</label>
+            <InputText class="form-control" @bind-Value="user.Email"></InputText>
+        </div>
+        <div class="ms-md-auto">
+            <label>Имя пользователя</label>
+            <InputText class="form-control" @bind-Value="user.Username"></InputText>
+        </div>
+        <div class="ms-md-auto">
+        <label>Роль</label>
+        <InputSelect class="form-select w-75" @bind-Value="userRoleValue">
+            @foreach (var role in Enum.GetValues(typeof(UserRole)).Cast<UserRole>())
+            {
+                <option value="@((int)role)">@role.ToString()</option>
+            }
+        </InputSelect>
+        </div>
+    </div>
+    
+    <div class="ms-md-4 mt-1">
+        <button type="submit" class="btn btn-primary btn-icon">
+            <i class="bi bi-floppy"></i>
+        </button>
+        <a class="btn btn-info btn-icon" title="Back to list"
+           href="/accounts">
+            <i class="bi bi-arrow-left-square"></i>
+        </a>
+    </div>
+</EditForm>
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger mt-3">@errorMessage</div>
+}
+else if(!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success mt-3">@successMessage</div>
+}
