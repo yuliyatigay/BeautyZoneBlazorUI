@@ -20,7 +20,7 @@ public class AuthClient : IAuthClient
     {
         var json = JsonSerializer.Serialize(user, _options);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync("/api/Account/Register", content);
+        var response = await _httpClient.PostAsync("/api/Account/CreateAccount", content);
         if (response.IsSuccessStatusCode)
         {
             return (true, "Registration Successful");
@@ -42,4 +42,5 @@ public class AuthClient : IAuthClient
         var error = await response.Content.ReadAsStringAsync();
         return (false, error);
     }
+
 }

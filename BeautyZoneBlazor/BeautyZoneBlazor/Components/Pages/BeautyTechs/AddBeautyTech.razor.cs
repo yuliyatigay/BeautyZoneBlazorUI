@@ -2,14 +2,14 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Components;
 
-namespace BeautyZoneBlazor.Components.Pages.Employees;
+namespace BeautyZoneBlazor.Components.Pages.BeautyTechs;
 
-public partial class CreateEmployee
+public partial class AddBeautyTech
 {
-    [Inject] private IEmployeeClient _client { get; set; } = default!;
+    [Inject] private IBeautyTechClient _client { get; set; } = default!;
     [Inject] private NavigationManager _navManager { get; set; } = default!;
     [Inject] private IProcedureClient _procedureClient { get; set; } = default!;
-    private Employee employee = new();
+    private BeautyTech _beautyTech = new();
     private List<Procedure> procedures = new();
     private List<SelectBox> selectBoxes = new();
     
@@ -20,19 +20,19 @@ public partial class CreateEmployee
     }
     private async Task CreateAsync()
     {
-        employee.Procedures = selectBoxes
+        _beautyTech.Procedures = selectBoxes
             .Where(s => s.Id.HasValue)
             .Select(s => new Procedure { Id = s.Id!.Value })
             .ToList();
-        var request = new EmployeeRequest
+        var request = new BeautyTechRequest
         {
-            Id = employee.Id,
-            Name = employee.Name,
-            PhoneNumber = employee.PhoneNumber,
-            Procedures = employee.Procedures.Select(p => p.Id).ToList()
+            Id = _beautyTech.Id,
+            Name = _beautyTech.Name,
+            PhoneNumber = _beautyTech.PhoneNumber,
+            Procedures = _beautyTech.Procedures.Select(p => p.Id).ToList()
         };
-        await _client.CreateEmployee(request);
-        _navManager.NavigateTo("/employees");
+        await _client.AddBeautyTech(request);
+        _navManager.NavigateTo("/beautytechs");
     }
     private async Task GetProceduresAsync()
     {

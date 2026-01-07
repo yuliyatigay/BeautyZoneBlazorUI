@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -28,8 +29,10 @@ public class CustomerClient : ICustomerClient
             "/api/Customer/GetAllCustomers");
 
         var response = await _http.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return new List<Customer>();
+        }
         return await response.Content
             .ReadFromJsonAsync<List<Customer>>(_options)
             ?? [];

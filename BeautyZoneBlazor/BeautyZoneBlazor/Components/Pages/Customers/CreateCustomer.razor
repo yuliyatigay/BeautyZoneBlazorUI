@@ -1,33 +1,27 @@
 @page "/CreateCustomer"
 @rendermode InteractiveServer
 
-<h3>CreateCustomer</h3>
+<h5>Добавить клиента</h5>
 
 <EditForm Model="customer" OnValidSubmit="CreateAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
 
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Имя</label>
             <InputText class="form-control" @bind-Value="customer.Name" />
         </div>
     </div>
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Номер телефона</label>
             <InputText class="form-control" @bind-Value="customer.PhoneNumber" />
         </div>
     </div>
-    <div class="row">
-        
-        <div class="ms-md-4">
-            <label>Телеграм</label>
-            <InputText class="form-control" @bind-Value="customer.TelegramId" />
-        </div>
-    </div>
     
-    <div class="ms-md-4 mt-3">
+    
+    <div class="ms-md-1 mt-1">
         <button type="submit" class="btn btn-primary btn-icon">
             <i class="bi bi-floppy"></i>
         </button>

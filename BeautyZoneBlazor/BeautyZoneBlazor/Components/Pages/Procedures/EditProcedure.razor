@@ -1,15 +1,15 @@
 @page "/EditProcedure/{id:guid}"
 @rendermode  InteractiveServer
-<h3>EditProcedure</h3>
+<h5>EditProcedure</h5>
 <EditForm Model="procedure" OnInvalidSubmit="EditAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="row">
-        <div class="ms-md-4">
+        <div class="ms-md-auto">
             <label>Procedure Name</label>
             <InputText class="form-control" @bind-Value="procedure.Name"></InputText>
         </div>
-        <div class="ms-md-4 mt-3">
+        <div class="ms-md-4 mt-1">
             <button type="submit" class="btn btn-primary btn-icon">
                 <i class="bi bi-floppy"></i>
             </button>

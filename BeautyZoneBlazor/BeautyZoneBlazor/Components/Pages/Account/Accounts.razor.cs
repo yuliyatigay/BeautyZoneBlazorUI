@@ -1,15 +1,16 @@
+using Domain.Enums;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace BeautyZoneBlazor.Components.Pages.Employees;
+namespace BeautyZoneBlazor.Components.Pages.Account;
 
-public partial class Employees
+public partial class Accounts
 {
-    [Inject] private IEmployeeClient _client { get; set; } = default!;
+    [Inject] private IUserClient _client { get; set; } = default!;
     [Inject] private IJSRuntime _jsRuntime { get; set; } = default!;
-    private List<Employee> employees = new();
+    private List<User> users = new();
     private int counter = 1;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -17,15 +18,17 @@ public partial class Employees
         await GetAsync();
         StateHasChanged();
     }
+
     private async Task GetAsync()
     {
-        employees = await _client.GetAllEmployees();
+        users = await _client.GetAllUsers();
     }
-    private async Task DeleteAsync(Employee employee)
+
+    private async Task DeleteAsync(User user)
     {
-        var ok = await _jsRuntime.InvokeAsync<bool>("confirm", "Удалить мастера?");
+        var ok = await _jsRuntime.InvokeAsync<bool>("confirm", "Удалить выбранный аккаунт?");
         if (!ok) return;
-        await _client.DeleteEmployee(employee);
+        await _client.DeleteUser(user.Id);
         await GetAsync();
         StateHasChanged();
     }

@@ -1,16 +1,16 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace BeautyZoneBlazor.Auth;
 
-public class AuthStateProvider(ProtectedSessionStorage sessionStorage) : 
-    AuthenticationStateProvider
+public class AuthStateProvider(ProtectedLocalStorage localStorage) : AuthenticationStateProvider
 {
     public async override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var token = (await sessionStorage.GetAsync<string>("authToken")).Value;
+        var token = (await localStorage.GetAsync<string>("authToken")).Value;
         var idenntity = string.IsNullOrEmpty(token)
             ? new ClaimsIdentity() : GetClaimsIdentity(token);
         var user = new ClaimsPrincipal(idenntity);
@@ -19,7 +19,7 @@ public class AuthStateProvider(ProtectedSessionStorage sessionStorage) :
 
     public async Task UserAuthentificated(string token)
     {
-        await sessionStorage.SetAsync("authToken", token);
+        await localStorage.SetAsync("authToken", token);
         var identity = GetClaimsIdentity(token);
         var user = new ClaimsPrincipal(identity);
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
@@ -27,7 +27,7 @@ public class AuthStateProvider(ProtectedSessionStorage sessionStorage) :
 
     public async Task UserLoggedout()
     {
-        await sessionStorage.DeleteAsync("authToken");
+        await localStorage.DeleteAsync("authToken");
         var identity = new ClaimsIdentity();
         var user = new ClaimsPrincipal(identity);
         NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));

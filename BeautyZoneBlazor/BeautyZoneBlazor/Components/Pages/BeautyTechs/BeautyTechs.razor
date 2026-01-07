@@ -1,7 +1,7 @@
-@page "/Employees"
+@page "/BeautyTechs"
 @rendermode InteractiveServer
-<h1>Мастера</h1>
-<a href="CreateEmployee"
+<h5>Мастера</h5>
+<a href="AddBeautyTech"
    class="btn btn-primary btn-icon" title="Create">
     <i class="bi bi-plus-square"></i></a>
 <div class="table-responsive-sm mt-3">
@@ -14,23 +14,23 @@
         <th scope="col"></th>
         </thead>
         <tbody>
-        @foreach (var employee in employees)
+        @foreach (var beautyTech in beautyTechs)
         {
             <tr>
                 <td>@Increment()</td>
-                <td>@employee.Name</td>
-                <td>@employee.PhoneNumber</td>
+                <td>@beautyTech.Name</td>
+                <td>@beautyTech.PhoneNumber</td>
 
-                <td>@string.Join(", ", employee.Procedures.Select(p => p.Name))</td>
+                <td>@string.Join(", ", beautyTech.Procedures.Select(p => p.Name))</td>
 
                 <td>
                     <div class="d-flex gap-1">
-                        <NavLink href="@($"/EditEmployee/{employee.Id}")" class="btn btn-primary btn-icon btn-sm">
+                        <NavLink href="@($"/EditBeautyTech/{beautyTech.Id}")" class="btn btn-primary btn-icon btn-sm">
                             <i class="bi bi-pencil-square"></i>
                         </NavLink>
 
                         <button type="button" class="btn btn-danger btn-icon btn-sm"
-                                @onclick="() => DeleteAsync(employee)">
+                                @onclick="() => DeleteAsync(beautyTech)">
                             <i class="bi bi-trash3"></i>
                         </button>
                     </div>

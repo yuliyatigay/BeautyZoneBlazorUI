@@ -1,6 +1,6 @@
 namespace Domain.Models;
 
-public class EmployeeRequest
+public class BeautyTechRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
